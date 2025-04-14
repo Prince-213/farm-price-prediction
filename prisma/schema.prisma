@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum CropType {
+  maize
+  rice
+  sorghum
+  cassava
+  yam
+  beans
+  millet
+  soybeans
+  plantain
+  groundnut
+}
+
+enum Season {
+  planting
+  harvest
+  off_season @map("off-season") // Maps to "off-season" in database but uses off_season in code
+}
+
+
+
+enum Quality {
+  low
+  medium
+  high
+}
+
+enum TimePeriod {
+  current
+  one_two_years @map("1-2-years")
+  two_five_years @map("2-5-years")
+  five_plus_years @map("5+-years")
+}
+model Prices {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  crop        String @unique
+  pricePerKg  Int
+  unit        String   @default("NGN")
+  lastUpdated DateTime @default(now())
+  season      Season
+  
+  // Optional: Add indexes for better query performance
+  
+  @@index([season])
+  @@index([crop, season])
+}
+
+/* model HistoricalPrice {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  year      Int
+  price     Int
+  season    String
+  quality   String
+  pricePredictionId String @db.ObjectId
+  pricePrediction PricePrediction @relation(fields: [pricePredictionId], references: [id])
+} */
+
+model PricePrediction {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  crop           CropType
+  predictedPrice Int
+  pricePerKg     Int
+  quantity Int
+  season String
+  quality String
+  totalPrice     Int
+  currency       String     @default("NGN")
+  explanation    String
+  timestamp      DateTime   @default(now())
+  projectedDate  String
+  timePeriod     String
+  // historicalPrices HistoricalPrice[]
+  farmer   Farmer      @relation(fields: [farmersId], references: [id])
+  farmersId String    @db.ObjectId
+  
+  // Indexes for better query performance
+  @@index([crop])
+  @@index([timePeriod])
+  @@index([timestamp])
+}
+
+
+
+model Farmer {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email    String @unique
+  password String
+  predictions PricePrediction[] 
+  posts      Post[]
+
+}
+
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  content   String
+  createdAt DateTime @default(now())
+  author   Farmer    @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  comments Comment[]
+}
+
+type Comment {
+  name String
+  content String
+  createdAt DateTime @default(now())
+}

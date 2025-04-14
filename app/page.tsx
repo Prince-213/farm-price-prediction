@@ -1,103 +1,96 @@
 import Image from "next/image";
+import Link from "next/link";
+import { PiFarm } from "react-icons/pi";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className=" w-full bg-[#012D33]  min-h-screen relative">
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]  transform-gpu overflow-hidden  blur-3xl"
+      >
+        <div className="mx-auto aspect-[1155/678] rounded-full w-[50rem] bg-gradient-to-tr from-[#D3CDBD] to-[#E3BC87] opacity-30" />
+      </div>
+      <header className=" w-full border-b border-b-white/10 py-6">
+        <div className=" w-[90%] mx-auto flex items-center justify-between">
+          <div className=" flex items-center space-x-5">
+            <PiFarm className=" text-cyan-200 w-10 h-10" />
+            <h1 className=" font-bold text-3xl uppercase text-white">
+              My FarmPlace
+            </h1>
+          </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <div className=" flex items-center space-x-3">
+            <Link
+              href={"/auth/farmers"}
+              className=" bg-yellow-500 rounded-full px-10 py-4 font-semibold"
+            >
+              Farmer Login
+            </Link>
+            <Link
+              href={"/auth/admin"}
+              className=" border-yellow-500 border-2 text-yellow-500 rounded-full px-10 py-4 font-semibold"
+            >
+              Admin Login
+            </Link>
+          </div>
+        </div>
+      </header>
+      <main className=" w-full text-center pt-14">
+        <h1 className=" text-[#F6FFFF] text-balance justify-center text-8xl capitalize font-semibold max-w-[60%] leading-[7rem] mx-auto">
+          keep up to date with farm products.
+        </h1>
+
+        <p className=" text-[#F6FFFF]/50 text-xl capitalize max-w-[50%] text-pretty mt-6 justify-center leading-[2rem] mx-auto">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
+          maxime voluptatum atque, velit eaque doloribus minus laudantium
+          aliquid repudiandae ipsa odit eveniet consequatur error, eius nesciunt
+          cupiditate at corporis! Provident!
+        </p>
+
+        <div className=" pt-20 space-x-5 flex items-center">
+          <div className=" bg-red-300 rounded-3xl h-[40vh] w-[14vw] relative overflow-hidden">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src={"/images/jonny-swales-s1MW71bEHEc-unsplash.jpg"}
+              fill
+              alt=""
+              className=" object-center object-cover"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          <div className=" bg-red-300 rounded-full h-[40vh] relative overflow-hidden  w-[14vw]">
+            <Image
+              src={"/images/paul-engel-Egz8FC60ngM-unsplash.jpg"}
+              fill
+              alt=""
+              className=" object-center object-cover"
+            />
+          </div>
+          <div className=" bg-red-300 rounded-full h-[40vh] relative overflow-hidden  w-[40vw]">
+            <Image
+              src={"/images/thomas-gamstaetter-IFGVE61AAno-unsplash.jpg"}
+              fill
+              alt=""
+              className=" object-center object-cover"
+            />
+          </div>
+          <div className=" bg-red-300 rounded-3xl h-[40vh]  relative overflow-hidden w-[14vw]">
+            <Image
+              src={"/images/jonny-swales-s1MW71bEHEc-unsplash.jpg"}
+              fill
+              alt=""
+              className=" object-center object-cover"
+            />
+          </div>
+          <div className=" bg-red-300 rounded-[50%] h-[40vh] w-[20vw] relative overflow-hidden">
+            <Image
+              src={"/images/max-O_TVsaeZNlE-unsplash.jpg"}
+              fill
+              alt=""
+              className=" object-center object-cover"
+            />
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
