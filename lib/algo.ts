@@ -1,3 +1,4 @@
+
 interface PricePrediction {
   predictedPrice: number;
   pricePerKg: number;
@@ -195,6 +196,7 @@ export function predictNigeriaCropPrice(
       if (period === "5+-years") date.setFullYear(date.getFullYear() + 7);
       return date.toISOString().split("T")[0];
     } catch (e) {
+      console.log(e)
       return "current";
     }
   };
@@ -214,6 +216,7 @@ export function predictNigeriaCropPrice(
 
       return basePrice * Math.max(inflationFactor, timeFactor);
     } catch (e) {
+      console.log(e);
       return basePrice; // Fallback to base price if calculation fails
     }
   };

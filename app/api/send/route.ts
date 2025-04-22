@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: "Acme <no-reply@kargoxlogistics.com>",
       to: [body.email],
-      subject: "Emergency Response Notification",
+      subject: "Price Update Notification",
       react: PriceChangeEmail({
         produce: body.produce,
         newPrice: body.price

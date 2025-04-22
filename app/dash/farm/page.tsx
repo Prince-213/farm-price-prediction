@@ -31,7 +31,6 @@ import { BarChartComponent } from "@/components/admin-panel/bar-chart-farmer";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function DashboardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("cards"); // Default to cards view
 
   const { data, error, isLoading } = useSWR("/api/farmer", fetcher);
 

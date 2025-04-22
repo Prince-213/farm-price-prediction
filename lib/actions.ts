@@ -1,10 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { cookies } from "next/headers";
 import { predictNigeriaCropPrice } from "./algo";
 import { prisma } from "./prisma";
 import { redirect } from "next/navigation";
-import { formatDate, sendEmail } from "./utils";
+import {
+  calculatePercentageChange,
+  getCropPriceByName,
+  sendEmail
+} from "./utils";
 
 export const predictPrice = async (prevState: any, formData: FormData) => {
   console.log(formData);
@@ -31,7 +36,7 @@ export const predictPrice = async (prevState: any, formData: FormData) => {
   try {
     await prisma.pricePrediction.create({
       data: {
-        crop: cropType || "",
+        crop: cropType  ,
         predictedPrice: data.predictedPrice,
         pricePerKg: data.pricePerKg,
         totalPrice: data.totalPrice,
@@ -137,9 +142,27 @@ export const updatePrice = async (prevState: any, formData: FormData) => {
 
   const data = await prisma.farmer.findMany();
 
-  const email = [];
-
   try {
+    const currentCropPrice = await getCropPriceByName(crop);
+
+    const priceDifference = Math.abs(currentCropPrice - amount);
+
+    const percentPriceDiff = calculatePercentageChange(
+      currentCropPrice,
+      amount
+    );
+
+    await prisma.notifications.create({
+      data: {
+        crop: crop,
+        priceChange: priceDifference.toString(),
+        percentChange: percentPriceDiff.toString(),
+        previousPrice: currentCropPrice.toString(),
+        currentPrice: amount.toString(),
+        isIncrease: currentCropPrice > amount ? false : true
+      }
+    });
+
     await prisma.prices.update({
       where: {
         crop: crop
@@ -156,6 +179,8 @@ export const updatePrice = async (prevState: any, formData: FormData) => {
         price: amount.toString()
       });
     });
+
+    console.log("email functionality loaded");
 
     return { message: "success" };
   } catch (error) {
@@ -186,9 +211,30 @@ export const loginAdmin = async (prevState: any, formData: FormData) => {
   if (email === "admin@gmail.com" && password === "pass") {
     const cookieStore = await cookies();
     cookieStore.set("name", "admin", { secure: true });
+    cookieStore.set("admin", "skajfwe88wehs", { secure: true });
 
     return redirect("/dash/admin"); // ✅ Return redirect instead of just calling it
   } else {
     return { message: "unsuccess" };
   }
+};
+
+export const logoutFarmer = async () => {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("email");
+  cookieStore.delete("name");
+
+  cookieStore.delete("id");
+
+  return redirect("/"); // ✅ Return redirect instead of just calling it
+};
+
+export const logoutAdmin = async () => {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("admin");
+  cookieStore.delete("name");
+
+  return redirect("/"); // ✅ Return redirect instead of just calling it
 };

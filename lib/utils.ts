@@ -7,23 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Define types for our crop price data
-type CropType =
-  | "maize"
-  | "rice"
-  | "sorghum"
-  | "cassava"
-  | "yam"
-  | "beans"
-  | "millet"
-  | "soybeans";
 
-interface CropPrice {
-  crop: CropType;
-  pricePerKg: number;
-  unit: string;
-  lastUpdated: string;
-  season: "planting" | "harvest" | "off-season";
-}
+
+
 
 // Current prices as of June 2023 (sample data in Naira)
 
@@ -161,3 +147,30 @@ export const getBaseUrl = (): string => {
 
   return siteUrl;
 };
+
+export async function getCropPriceByName(cropName: string) {
+  try {
+    const cropPrice = await prisma.prices.findUnique({
+      where: {
+        crop: cropName
+      }
+    });
+
+    return cropPrice?.pricePerKg ?? 0;
+  } catch (error) {
+    console.error("Error fetching crop price:", error);
+    throw error;
+    return 0;
+  }
+}
+
+export function calculatePercentageChange(oldValue: number, newValue: number): number {
+  if (oldValue === 0) {
+    throw new Error("Old value cannot be zero (division by zero)");
+  }
+
+  const change = newValue - oldValue;
+  const percentageChange = (change / oldValue) * 100;
+
+  return percentageChange;
+}

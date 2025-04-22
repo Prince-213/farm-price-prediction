@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import useSWR from "swr";
+import { logoutFarmer } from "@/lib/actions";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -87,7 +88,7 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => {}}>
+        <DropdownMenuItem  className="hover:cursor-pointer" onClick={logoutFarmer}>
           <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
           Sign out
         </DropdownMenuItem>

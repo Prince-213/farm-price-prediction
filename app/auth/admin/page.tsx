@@ -60,7 +60,7 @@ export default function Login() {
                   type="email"
                   required
                   autoComplete="email"
-                  className=" w-full  p-4 rounded-lg text-black "
+                  className=" w-full  p-4 rounded-lg text-black border-2 "
                 />
               </div>
             </div>
@@ -68,7 +68,7 @@ export default function Login() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-base font-medium text-cyan-200"
+                className="block text-base font-medium text-cyan-200 "
               >
                 Password
               </label>
@@ -79,7 +79,7 @@ export default function Login() {
                   type="password"
                   required
                   autoComplete="password"
-                  className=" w-full  p-4 rounded-lg text-black "
+                  className=" w-full  p-4 rounded-lg text-black border-2 "
                 />
               </div>
             </div>

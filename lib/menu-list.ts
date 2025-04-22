@@ -1,4 +1,4 @@
-import { SquarePen, LayoutGrid, LucideIcon } from "lucide-react";
+import { SquarePen, LayoutGrid, LucideIcon, BellDot } from "lucide-react";
 
 type Submenu = {
   href: string;
@@ -19,7 +19,7 @@ type Group = {
   menus: Menu[];
 };
 
-export function getMenuList(pathname: string): Group[] {
+export function getMenuList(): Group[] {
   return [
     {
       groupLabel: "",
@@ -51,8 +51,8 @@ export function getMenuList(pathname: string): Group[] {
           ]
         }
       ]
-    }
-    /* {
+    },
+    {
       groupLabel: "Settings",
       menus: [
         {
@@ -60,12 +60,12 @@ export function getMenuList(pathname: string): Group[] {
           label: "Notifications",
           icon: BellDot
         },
-        {
+        /* {
           href: "/account",
           label: "Account",
           icon: Settings
-        }
+        } */
       ]
-    } */
+    }
   ];
 }

@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { predictPrice } from "@/lib/actions";
+import { toast } from "sonner";
 
 interface PredictionModalProps {
   isOpen: boolean;
@@ -40,6 +41,14 @@ export default function PredictionModal({
     predictPrice,
     initialState
   );
+
+  useEffect(() => {
+    if (state.message == "success") {
+      toast.success("Prediction Successful");
+    } else if (state.message == "unsuccess") {
+      toast.error("Prediction Unsuccessful");
+    }
+  }, [state]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
