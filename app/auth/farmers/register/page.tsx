@@ -19,7 +19,7 @@ export default function Register() {
 
   useEffect(() => {
     if (state.message == "success") {
-      toast.success("Accound created");
+      toast.success("Account created");
     } else if (state.message == "unsuccess") {
       toast.error("Invalid credentials");
     }

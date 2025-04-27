@@ -79,59 +79,59 @@ export default function PredictionHistory({ predictions }) {
               <div className="space-y-2 text-gray-700 text-lg">
                 <p>
                   <span className="font-semibold">Crop:</span>{" "}
-                  {predictions[selected].crop}
+                  {predictions[selected]?.crop}
                 </p>
                 <p>
                   <span className="font-semibold">Season:</span>{" "}
-                  {predictions[selected].season}
+                  {predictions[selected]?.season}
                 </p>
                 <p>
                   <span className="font-semibold">Quality:</span>{" "}
-                  {predictions[selected].quality.charAt(0).toUpperCase() +
-                    predictions[selected].quality.slice(1)}
+                  {predictions[selected]?.quality.charAt(0).toUpperCase() +
+                    predictions[selected]?.quality.slice(1)}
                 </p>
                 <p>
                   <span className="font-semibold">Current Price per Kg:</span>{" "}
-                  {predictions[selected].currency}{" "}
-                  {predictions[selected].pricePerKg.toLocaleString()}
+                  {predictions[selected]?.currency}{" "}
+                  {predictions[selected]?.pricePerKg.toLocaleString()}
                 </p>
                 <p>
                   <span className="font-semibold">Predicted Price per Kg:</span>{" "}
-                  {predictions[selected].currency}{" "}
-                  {predictions[selected].predictedPrice.toLocaleString()}
+                  {predictions[selected]?.currency}{" "}
+                  {predictions[selected]?.predictedPrice.toLocaleString()}
                 </p>
                 <p>
                   <span className="font-semibold">Projected Date:</span>{" "}
-                  {new Date(predictions[selected].projectedDate).toDateString()}
+                  {new Date(predictions[selected]?.projectedDate).toDateString()}
                 </p>
                 <p>
                   <span className="font-semibold">Time Period:</span>{" "}
-                  {predictions[selected].timePeriod.replace(/-/g, " to ")}
+                  {predictions[selected]?.timePeriod.replace(/-/g, " to ")}
                 </p>
                 <p>
                   <span className="font-semibold">Quantity:</span>{" "}
-                  {predictions[selected].quantity.toLocaleString()} kg
+                  {predictions[selected]?.quantity.toLocaleString()} kg
                 </p>
                 <p>
                   <span className="font-semibold">Total Projected Price:</span>{" "}
-                  {predictions[selected].currency}{" "}
-                  {predictions[selected].totalPrice.toLocaleString()}
+                  {predictions[selected]?.currency}{" "}
+                  {predictions[selected]?.totalPrice.toLocaleString()}
                 </p>
                 <p className="text-justify">
                   <span className="font-semibold">Explanation:</span>{" "}
-                  {predictions[selected].explanation}
+                  {predictions[selected]?.explanation}
                 </p>
                 <p>
                   <span className="font-semibold">Report Generated On:</span>{" "}
-                  {new Date(predictions[selected].timestamp).toUTCString()}
+                  {new Date(predictions[selected]?.timestamp).toUTCString()}
                 </p>
                 <p>
                   <span className="font-semibold">Farmer ID:</span>{" "}
-                  {predictions[selected].farmersId}
+                  {predictions[selected]?.farmersId}
                 </p>
                 <p>
                   <span className="font-semibold">Prediction ID:</span>{" "}
-                  {predictions[selected].id}
+                  {predictions[selected]?.id}
                 </p>
               </div>
             </DialogDescription>
@@ -215,7 +215,7 @@ export default function PredictionHistory({ predictions }) {
                 {prediction?.quality}
               </TableCell>
               <TableCell>{formatCurrency(prediction?.pricePerKg)}</TableCell>
-              <TableCell>{formatCurrency(prediction.totalPrice)}</TableCell>
+              <TableCell>{formatCurrency(prediction?.totalPrice)}</TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

@@ -79,7 +79,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">
                 {!error && !isLoading ? (
-                  <p> {data.data.predictions.length} </p>
+                  <p> {data?.data.predictions.length} </p>
                 ) : null}
               </div>
               <p className="text-xs text-muted-foreground">
@@ -99,7 +99,7 @@ export default function DashboardPage() {
             <TabsContent value="cards">
               {priceData && (
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {priceData.data.map((produce) =>
+                  {priceData?.data.map((produce) =>
                     priceError || priceLoading ? (
                       <div
                         key={produce.id}
@@ -150,7 +150,7 @@ export default function DashboardPage() {
                 {error || isLoading ? (
                   <div className=" w-full h-40 rounded-md bg-gray-200 animate-pulse"></div>
                 ) : (
-                  <PredictionHistory predictions={data.data.predictions} />
+                  <PredictionHistory predictions={data?.data.predictions} />
                 )}
               </CardContent>
             </Card>
