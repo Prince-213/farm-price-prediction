@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { prisma } from "../../../lib/prisma/index";
+import { prisma } from '@/app/prisma' ;
 
 export async function GET() {
   const cookieStore = await cookies();

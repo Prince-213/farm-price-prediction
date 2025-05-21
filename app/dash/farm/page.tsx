@@ -24,6 +24,53 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PredictionModal from "@/components/prediction-modal";
 import PredictionHistory from "@/components/prediction-history";
 
+import { predictYield } from "@/lib/api";
+
+/* async function handlePrediction() {
+  try {
+    const input = {
+      region: 0, // West
+      soil_type: 1, // Clay
+      crop: 4, // Wheat
+      rainfall: 120.5,
+      temperature: 25.0,
+      fertilizer: 0, // True
+      irrigation: 0, // True
+      weather: 2, // Sunny
+      days_to_harvest: 90
+    };
+
+    const result = await predictYield(input);
+    console.log("Prediction:", result.prediction);
+    console.log("Human readable:", result.human_readable);
+  } catch (error) {
+    console.error("Prediction error:", error);
+  }
+}
+ */
+
+async function handlePrediction() {
+  try {
+    const input = {
+      region: 2, // North
+      soil_type: 1, // Clay
+      crop: 5, // Maize
+      rainfall: 120.5,
+      temperature: 25.0,
+      fertilizer: 0, // True
+      irrigation: 0, // True
+      weather: 2, // Sunny
+      harvest: 90
+    };
+
+    const result = await predictYield(input);
+    console.log(`Predicted Yield: ${result.yield_tons} tons`);
+    console.log(`Estimated Value: ₦${result.naira_value.toLocaleString()}`);
+    console.log("Details:", result.human_readable);
+  } catch (error) {
+    console.error("Prediction error:", error);
+  }
+}
 import useSWR from "swr";
 import { formatCurrency } from "@/lib/utils";
 import { BarChartComponent } from "@/components/admin-panel/bar-chart-farmer";
@@ -63,6 +110,7 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold tracking-tight">
             Welcome back, Farmer
           </h2>
+          <Button onClick={() => handlePrediction()}>Test</Button>
           <Button className="ml-auto" onClick={() => setIsModalOpen(true)}>
             Predict New Price
           </Button>

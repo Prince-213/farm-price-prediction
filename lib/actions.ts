@@ -2,41 +2,38 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { predictNigeriaCropPrice } from "./algo";
-import { prisma } from "./prisma";
+import { prisma } from "@/app/prisma";
 import { redirect } from "next/navigation";
+import { predictYield } from "@/lib/api";
 import {
   calculatePercentageChange,
   getCropPriceByName,
   sendEmail
 } from "./utils";
 
+interface ActionResult {
+  prediction: number | null;
+  error: string | null;
+  message: string;
+}
+
+// Mapping objects for form values to model numeric inputs
+
 export const predictPrice = async (prevState: any, formData: FormData) => {
   console.log(formData);
 
-  const cookieStore = await cookies();
-
-  const cropType = formData.get("crop")?.toString() as CropType;
-
-  const season = formData.get("season")?.toString() as Season;
-  const quantity = parseInt(formData.get("quantity")?.toString() || "0");
-  const quality = formData.get("quality")?.toString() as Quality;
-  const period = formData.get("period")?.toString() as TimePeriod;
-
-  const data = predictNigeriaCropPrice(
+  /*  const data = predictNigeriaCropPrice(
     cropType,
     season,
     quantity,
     quality,
     period
-  );
-
-  console.log(data);
+  ); */
 
   try {
-    await prisma.pricePrediction.create({
+    /* await prisma.pricePrediction.create({
       data: {
-        crop: cropType  ,
+        crop: cropType,
         predictedPrice: data.predictedPrice,
         pricePerKg: data.pricePerKg,
         totalPrice: data.totalPrice,
@@ -52,9 +49,26 @@ export const predictPrice = async (prevState: any, formData: FormData) => {
 
         farmersId: cookieStore.get("id")?.value.toString() || ""
       }
-    });
+    }); */
 
-    return { message: "success" };
+    const input = {
+      region: parseInt(formData.get("region") as string),
+      soil_type: parseInt(formData.get("soil_type") as string),
+      crop: parseInt(formData.get("crop") as string),
+      rainfall: parseInt(formData.get("rainfall") as string),
+      temperature: parseInt(formData.get("temperature") as string),
+      fertilizer: parseInt(formData.get("fertilizer") as string),
+      irrigation: parseInt(formData.get("irrigation") as string),
+      weather: parseInt(formData.get("weather") as string),
+      days_to_harvest: parseInt(formData.get("harvest") as string)
+    };
+
+    const result = await predictYield(input);
+    console.log(`Predicted Yield: ${result.yield_tons} tons`);
+    console.log(`Estimated Value: ₦${result.naira_value.toLocaleString()}`);
+    console.log("Details:", result.human_readable);
+
+    return { message: "success", prediction: result.naira_value };
   } catch (error) {
     console.log(error);
     return { message: "unsuccess" };
